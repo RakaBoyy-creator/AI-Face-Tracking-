@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Face Tracker Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils"></script>
+    <style>
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .scan-line {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00f2fe, transparent);
+            animation: scan 3s linear infinite;
+        }
+        @keyframes scan {
+            0% { top: 0%; }
+            100% { top: 100%; }
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-white min-h-screen flex flex-col items-center p-8">
+
+    <header class="mb-8 text-center">
+        <h1 class="text-4xl font-black tracking-tighter bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+            CYBER-TRACK AI
+        </h1>
+        <p class="text-slate-400 text-sm mt-2 uppercase tracking-widest">Advanced Neural Monitoring</p>
+    </header>
+
+    <div class="relative group">
+        <div class="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+        
+        <div class="relative glass rounded-2xl overflow-hidden shadow-2xl w-full max-w-2xl">
+            <video id="input_video" class="hidden"></video>
+            <canvas id="output_canvas" width="640" height="480" class="w-full h-auto bg-black"></canvas>
+            
+            <div class="absolute inset-0 pointer-events-none border border-cyan-500/20 rounded-2xl">
+                <div class="scan-line absolute w-full z-10"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-8 grid grid-cols-2 md:grid-cols-3 gap-4 w-full max-w-2xl">
+        <div class="glass p-4 rounded-xl">
+            <p class="text-xs text-cyan-400 uppercase">Status</p>
+            <p id="status" class="text-lg font-mono">Initializing...</p>
+        </div>
+        <div class="glass p-4 rounded-xl">
+            <p class="text-xs text-cyan-400 uppercase">Detection</p>
+            <p id="mesh-count" class="text-lg font-mono">0 Points</p>
+        </div>
+        <div class="glass p-4 rounded-xl hidden md:block">
+            <p class="text-xs text-cyan-400 uppercase">Latency</p>
+            <p id="latency" class="text-lg font-mono">-- ms</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
